@@ -17,10 +17,9 @@
       "id": 1
     },
     {
-      "id": 2,
       "name": "Big Fat Burger",
-      "description": "What else you need to say?",
       "imagePath": "https://upload.wikimedia.org/wikipedia/commons/b/be/Burger_King_Angus_Bacon_%26_Cheese_Steak_Burger.jpg",
+      "description": "What else you need to say?",
       "ingredients": [
         {
           "name": "Buns",
@@ -30,7 +29,8 @@
           "name": "Meat",
           "amount": 1
         }
-      ]
+      ],
+      "id": 2
     },
     {
       "name": "Summer Salad",
@@ -42,10 +42,12 @@
   ],
   "ingredients": [
     {
+      "id": 1,
       "name": "Apples",
       "amount": 5
     },
     {
+      "id": 2,
       "name": "Tomatoes",
       "amount": 10
     }

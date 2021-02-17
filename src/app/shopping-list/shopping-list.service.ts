@@ -38,7 +38,7 @@ export class ShoppingListService {
   // }
 
   updateIngredient(newIngredient: Ingredient) {
-    this.ingredients = this.ingredients.map( ingredient => (ingredient.name === newIngredient.name ? newIngredient : ingredient));
+    this.ingredients = this.ingredients.map( ingredient => (ingredient.id === newIngredient.id ? newIngredient : ingredient));
     this.ingredientsChanged.next(this.ingredients.slice());
   }
 
@@ -47,8 +47,8 @@ export class ShoppingListService {
   //   this.ingredientsChanged.next(this.ingredients.slice());
   // }
 
-  deleteIngredient(name: string){
-    this.ingredients = this.ingredients.filter(ingredient => ingredient.name !== name);
+  deleteIngredient(id: number){
+    this.ingredients = this.ingredients.filter(ingredient => ingredient.id !== id);
     this.ingredientsChanged.next(this.ingredients.slice());
   }
 }

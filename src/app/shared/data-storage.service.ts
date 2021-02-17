@@ -14,7 +14,7 @@ export class DataStorageService {
   constructor(private http: HttpClient, private recipeService: RecipeService, private shoppingListService: ShoppingListService) { }
 
   addRecipe(recipe: Recipe){
-    this.http.post("http://localhost:3000/recipes", recipe).subscribe(
+    this.http.post("http://192.168.1.25:3000/recipes", recipe).subscribe(
       response => {
         this.recipeService.addRecipe(recipe);
         this.fetchRecipes();
@@ -23,7 +23,7 @@ export class DataStorageService {
   }
 
   updateRecipe(recipe: Recipe){
-    this.http.put(`http://localhost:3000/recipes/${recipe.id}`, recipe).subscribe(
+    this.http.put(`http://192.168.1.25:3000/recipes/${recipe.id}`, recipe).subscribe(
       response => {
         this.recipeService.updateRecipe(recipe);
       }
@@ -31,7 +31,7 @@ export class DataStorageService {
   }
 
   deleteRecipe(index: number){
-    this.http.delete(`http://localhost:3000/recipes/${index}`).subscribe(
+    this.http.delete(`http://192.168.1.25:3000/recipes/${index}`).subscribe(
       response => {
         this.recipeService.deleteRecipe(index);
       }
@@ -40,7 +40,7 @@ export class DataStorageService {
 
   fetchRecipes(){
     this.recipeService.setRecipes([]);
-    this.http.get<Recipe[]>("http://localhost:3000/recipes")
+    this.http.get<Recipe[]>("http://192.168.1.25:3000/recipes")
     .pipe(
       map( recipes => {
         return recipes.map( recipe => {
@@ -54,7 +54,7 @@ export class DataStorageService {
   }
 
   addIngredient(ingredient: Ingredient){
-    this.http.post("http://localhost:3000/ingredients", ingredient).subscribe(
+    this.http.post("http://192.168.1.25:3000/ingredients", ingredient).subscribe(
       response => {
         this.shoppingListService.addIngredient(ingredient);
         this.fetchRecipes();
@@ -63,33 +63,35 @@ export class DataStorageService {
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]){
-    this.http.post("http://localhost:3000/ingredients", ingredients).subscribe(
-      response => {
-        this.shoppingListService.addIngredients(ingredients);
-        this.fetchIngredients();
-      }
-    );
+    ingredients.map( ingredient => {
+      this.http.post("http://192.168.1.25:3000/ingredients", ingredient).subscribe(
+        response => {
+          this.shoppingListService.addIngredients(ingredients);
+          this.fetchIngredients();
+        }
+      );
+    });
   }
 
   updateIngredient(ingredient: Ingredient){
-    this.http.put(`http://localhost:3000/ingredients/${ingredient.name}`, ingredient).subscribe(
+    this.http.put(`http://192.168.1.25:3000/ingredients/${ingredient.id}`, ingredient).subscribe(
       response => {
         this.shoppingListService.updateIngredient(ingredient);
       }
     );
   }
 
-  deleteIngredient(name: string){
-    this.http.delete(`http://localhost:3000/ingredients/${name}`).subscribe(
+  deleteIngredient(id: number){
+    this.http.delete(`http://192.168.1.25:3000/ingredients/${id}`).subscribe(
       response => {
-        this.shoppingListService.deleteIngredient(name);
+        this.shoppingListService.deleteIngredient(id);
       }
     );
   }
 
   fetchIngredients(){
     this.shoppingListService.setIngredients([]);
-    this.http.get<Ingredient[]>("http://localhost:3000/ingredients")
+    this.http.get<Ingredient[]>("http://192.168.1.25:3000/ingredients")
     .subscribe(
       response => this.shoppingListService.setIngredients(response)
     );

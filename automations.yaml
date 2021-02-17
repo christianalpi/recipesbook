@@ -1,0 +1,57 @@
+######################################################
+######   Notifica aggiornamento Homeassistant   ######
+######################################################
+- alias: Notifica aggiornamento
+  hide_entity: True
+  initial_state: 'true'
+  trigger:
+    - platform: state
+      entity_id: bynary_sensor.updater
+      from: 'off'
+      to: 'on'
+  # condition:
+  #   condition: time
+  #   after: '06:00:00'
+  #   before: '22:00:00'
+  action:
+    - service: notify.christian
+      data:
+        message: 'Ci sono nuovi aggiornamenti Home Assistant'
+
+######################################################
+######      Notifica scadenza certificato      #######
+######################################################
+
+- alias: ssl in scadenza
+  hide_entity: True
+  initial_state: 'true'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.ssl
+    below: 20
+  condition:
+    condition: time
+    after: '06:00:00'
+    before: '22:00:00'
+  action:
+    service: notify.christian
+    data:
+      title: '* ATTENZIONE *'
+      message: 'Certificato SSL in scadenza'
+
+- alias: ssl in scadenza urgente
+  hide_entity: True
+  initial_state: 'true'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.ssl
+    below: 10
+  condition:
+    condition: time
+    after: '06:00:00'
+    before: '22:00:00'
+  action:
+    service: notify.christian
+    data:
+      title: '* ATTENZIONE *'
+      message: 'Certificato SSL in scadenza in meno di 10 giorni'

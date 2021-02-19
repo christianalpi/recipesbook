@@ -1,14 +1,23 @@
 import { Component } from '@angular/core';
-import { Router, Route } from '@angular/router';
+// import { Router, Route } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  template: `
+    <app-navbar></app-navbar>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+  `,
+  styles: []
 })
 export class AppComponent {
   title = 'RecipesBook';
 
-  constructor(private router: Router) {}
+  constructor() {}
 
 }

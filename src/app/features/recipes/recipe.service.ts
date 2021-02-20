@@ -37,31 +37,22 @@ export class RecipeService {
 
   addRecipe(newRecipe: Recipe): void{
     this.dataStorageService.addRecipe(newRecipe)
-    .pipe(
-      switchMap(update => this.dataStorageService.fetchRecipes())
-    )
     .subscribe(
-      response => this.setRecipes(response)
+      response => this.setRecipes([...this.recipes, response])
     );
   }
 
-  updateRecipe(recipe: Recipe): void{
-    this.dataStorageService.updateRecipe(recipe)
-    .pipe(
-      switchMap(update => this.dataStorageService.fetchRecipes())
-    )
+  updateRecipe(updRecipe: Recipe): void{
+    this.dataStorageService.updateRecipe(updRecipe)
     .subscribe(
-      response => this.setRecipes(response)
+      response => this.setRecipes(this.recipes.map(recipe => recipe.id === response.id ? response : recipe))
     );
   }
 
   deleteRecipe(id: number): void{
     this.dataStorageService.deleteRecipe(id)
-    .pipe(
-      switchMap(update => this.dataStorageService.fetchRecipes())
-    )
     .subscribe(
-      response => this.setRecipes(response)
+      response => this.setRecipes(this.recipes.filter(recipe => recipe.id !== id))
     );
   }
 

@@ -97,7 +97,6 @@ export class RecipeEditComponent implements OnInit {
     }
     else {
       this.route.params.subscribe((params: Params) => {
-        console.log(params['id']);
         this.id = +params['id'];
         this.editMode = params['id'] != null;
         this.initForm();
@@ -164,7 +163,6 @@ export class RecipeEditComponent implements OnInit {
 
   onCancel(): void{
     this.router.navigate( ['recipes', this.id])
-    // { relativeTo: this.route });
   }
 
 }

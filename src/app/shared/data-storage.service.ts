@@ -12,16 +12,16 @@ export class DataStorageService {
 
   constructor(private http: HttpClient) { }
 
-  addRecipe(recipe: Recipe): Observable<void>{
-    return this.http.post<void>("http://192.168.1.25:3000/recipes", recipe);
+  addRecipe(recipe: Recipe): Observable<Recipe>{
+    return this.http.post<Recipe>("http://192.168.1.25:3000/recipes", recipe);
   }
 
-  updateRecipe(recipe: Recipe): Observable<void>{
-    return this.http.put<void>(`http://192.168.1.25:3000/recipes/${recipe.id}`, recipe);
+  updateRecipe(recipe: Recipe): Observable<Recipe>{
+    return this.http.patch<Recipe>(`http://192.168.1.25:3000/recipes/${recipe.id}`, recipe);
   }
 
-  deleteRecipe(index: number): Observable<void>{
-    return this.http.delete<void>(`http://192.168.1.25:3000/recipes/${index}`);
+  deleteRecipe(id: number): Observable<Recipe>{
+    return this.http.delete<Recipe>(`http://192.168.1.25:3000/recipes/${id}`);
   }
 
   fetchRecipes(): Observable<Recipe[]>{
@@ -35,16 +35,16 @@ export class DataStorageService {
     );
   }
 
-  addIngredient(ingredient: Ingredient): Observable<void>{
-    return this.http.post<void>("http://192.168.1.25:3000/ingredients", ingredient);
+  addIngredient(ingredient: Ingredient): Observable<Ingredient>{
+    return this.http.post<Ingredient>("http://192.168.1.25:3000/ingredients", ingredient);
   }
 
-  updateIngredient(ingredient: Ingredient): Observable<void>{
-    return this.http.put<void>(`http://192.168.1.25:3000/ingredients/${ingredient.id}`, ingredient);
+  updateIngredient(ingredient: Ingredient): Observable<Ingredient>{
+    return this.http.patch<Ingredient>(`http://192.168.1.25:3000/ingredients/${ingredient.id}`, ingredient);
   }
 
-  deleteIngredient(id: number): Observable<void>{
-    return this.http.delete<void>(`http://192.168.1.25:3000/ingredients/${id}`);
+  deleteIngredient(id: number): Observable<Ingredient>{
+    return this.http.delete<Ingredient>(`http://192.168.1.25:3000/ingredients/${id}`);
   }
 
   fetchIngredients(): Observable<Ingredient[]>{

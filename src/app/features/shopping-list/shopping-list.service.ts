@@ -30,31 +30,27 @@ export class ShoppingListService {
 
   addIngredient(newIngredient: Ingredient) {
     this.dataStorageService.addIngredient(newIngredient)
-    .pipe(
-      switchMap(update => this.dataStorageService.fetchIngredients())
-    )
     .subscribe(
-      response => this.setIngredients(response)
+      response => this.setIngredients([...this.ingredients, response])
     );
   }
 
-  updateIngredient(ingredient: Ingredient) {
-    this.dataStorageService.updateIngredient(ingredient)
-    .pipe(
-      switchMap(update => this.dataStorageService.fetchIngredients())
-    )
+  updateIngredient(updIngredient: Ingredient) {
+    this.dataStorageService.updateIngredient(updIngredient)
     .subscribe(
-      response => this.setIngredients(response)
+      response => this.setIngredients(
+        this.ingredients.map(ingredient => ingredient.id === response.id ? response : ingredient)
+      )
     );
   }
 
   deleteIngredient(id: number){
     this.dataStorageService.deleteIngredient(id)
-    .pipe(
-      switchMap(update => this.dataStorageService.fetchIngredients())
-    )
     .subscribe(
-      response => this.setIngredients(response)
+      response => {
+        this.setIngredients(
+        this.ingredients.filter(ingredient => ingredient.id !== id)
+      )}
     );
   }
 
@@ -65,3 +61,14 @@ export class ShoppingListService {
   }
 
 }
+
+// Promemoria swithMap
+  // addIngredient(newIngredient: Ingredient) {
+  //   this.dataStorageService.addIngredient(newIngredient)
+  //   .pipe(
+  //     switchMap(update => this.dataStorageService.fetchIngredients())
+  //   )
+  //   .subscribe(
+  //     response => this.setIngredients(response)
+  //   );
+  // }

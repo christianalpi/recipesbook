@@ -49,7 +49,12 @@
     {
       "id": 2,
       "name": "Tomatoes",
-      "amount": 10
+      "amount": 15
+    },
+    {
+      "id": 3,
+      "name": "Patatoes",
+      "amount": 15
     }
   ]
 }

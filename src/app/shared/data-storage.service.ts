@@ -55,15 +55,8 @@ export class DataStorageService {
     return this.http.get<Ingredient[]>(`${this.apiUrl}/ingredients`);
   }
 
-  addIngredientsToShoppingList(ingredients: Ingredient[]): void{
-    ingredients.map( ingredient => {
-      this.http.post(`${this.apiUrl}/ingredients`, ingredient)
-      .subscribe(
-        response => {
-          this.fetchIngredients();
-        }
-      );
-    });
-  }
+  // addIngredientsToShoppingList(ingredient: Ingredient): Observable<Ingredient>{
+  //   return this.http.post<Ingredient>(`${this.apiUrl}/ingredients`, ingredient);
+  // }
 
 }

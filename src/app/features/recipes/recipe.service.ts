@@ -57,7 +57,9 @@ export class RecipeService {
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
-    this.dataStorageService.addIngredientsToShoppingList(ingredients);
+    ingredients.map(ingredient => {
+      this.shoppingList.addIngredient(ingredient);
+    });
   }
 
 }

@@ -10,6 +10,9 @@ import { NavbarComponent } from './core/components/navbar.component';
 
 import { RecipeService } from './features/recipes/recipe.service';
 import { ShoppingListService } from './features/shopping-list/shopping-list.service';
+import { HttpModule } from './shared/http.module';
+
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,8 @@ import { ShoppingListService } from './features/shopping-list/shopping-list.serv
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    HttpModule.forRoot({ environment })
   ],
   providers: [
     ShoppingListService,

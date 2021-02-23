@@ -3,12 +3,12 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve --host 192.168.1.25",
+        "start": "ng serve --host 192.168.0.221",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "server": "json-server --watch server/db.json --host 192.168.1.25"
+        "server": "json-server --watch server/db.json --host 192.168.0.221"
     },
     "private": true,
     "dependencies": {

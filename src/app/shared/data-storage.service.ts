@@ -1,31 +1,35 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Recipe } from '../features/recipes/recipe.model';
 import { map } from 'rxjs/operators';
 import { Ingredient } from './ingredient.model';
 import { Observable } from 'rxjs';
+import { EnvironmentConfig, ENV_CONFIG } from 'src/environments/environment-config.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataStorageService {
+  public apiUrl: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, @Inject(ENV_CONFIG) private config: EnvironmentConfig) {
+    this.apiUrl = `${config.environment.baseUrl}`;
+   }
 
   addRecipe(recipe: Recipe): Observable<Recipe>{
-    return this.http.post<Recipe>("http://192.168.1.25:3000/recipes", recipe);
+    return this.http.post<Recipe>(`${this.apiUrl}/recipes`, recipe);
   }
 
   updateRecipe(recipe: Recipe): Observable<Recipe>{
-    return this.http.patch<Recipe>(`http://192.168.1.25:3000/recipes/${recipe.id}`, recipe);
+    return this.http.patch<Recipe>(`${this.apiUrl}/recipes/${recipe.id}`, recipe);
   }
 
   deleteRecipe(id: number): Observable<Recipe>{
-    return this.http.delete<Recipe>(`http://192.168.1.25:3000/recipes/${id}`);
+    return this.http.delete<Recipe>(`${this.apiUrl}/recipes/${id}`);
   }
 
   fetchRecipes(): Observable<Recipe[]>{
-    return this.http.get<Recipe[]>("http://192.168.1.25:3000/recipes")
+    return this.http.get<Recipe[]>(`${this.apiUrl}/recipes`)
     .pipe(
       map( recipes => {
         return recipes.map( recipe => {
@@ -36,24 +40,24 @@ export class DataStorageService {
   }
 
   addIngredient(ingredient: Ingredient): Observable<Ingredient>{
-    return this.http.post<Ingredient>("http://192.168.1.25:3000/ingredients", ingredient);
+    return this.http.post<Ingredient>(`${this.apiUrl}/ingredients`, ingredient);
   }
 
   updateIngredient(ingredient: Ingredient): Observable<Ingredient>{
-    return this.http.patch<Ingredient>(`http://192.168.1.25:3000/ingredients/${ingredient.id}`, ingredient);
+    return this.http.patch<Ingredient>(`${this.apiUrl}/ingredients/${ingredient.id}`, ingredient);
   }
 
   deleteIngredient(id: number): Observable<Ingredient>{
-    return this.http.delete<Ingredient>(`http://192.168.1.25:3000/ingredients/${id}`);
+    return this.http.delete<Ingredient>(`${this.apiUrl}/ingredients/${id}`);
   }
 
   fetchIngredients(): Observable<Ingredient[]>{
-    return this.http.get<Ingredient[]>("http://192.168.1.25:3000/ingredients");
+    return this.http.get<Ingredient[]>(`${this.apiUrl}/ingredients`);
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]): void{
     ingredients.map( ingredient => {
-      this.http.post("http://192.168.1.25:3000/ingredients", ingredient)
+      this.http.post(`${this.apiUrl}/ingredients`, ingredient)
       .subscribe(
         response => {
           this.fetchIngredients();
